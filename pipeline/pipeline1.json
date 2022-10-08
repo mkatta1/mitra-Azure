@@ -62,13 +62,26 @@
 				"outputs": [
 					{
 						"referenceName": "yamunaCsv",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": {
+								"value": "@pipeline().parameters.filePath",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.fileName",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
 		"parameters": {
 			"fileName": {
+				"type": "String"
+			},
+			"filePath": {
 				"type": "String"
 			}
 		},
