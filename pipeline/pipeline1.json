@@ -78,11 +78,17 @@
 			}
 		],
 		"parameters": {
-			"fileName": {
+			"fileNameSource": {
 				"type": "String"
 			},
-			"filePath": {
+			"filePathSource": {
 				"type": "String"
+			},
+			"fileNameTarget": {
+				"type": "string"
+			},
+			"filePathTarget": {
+				"type": "string"
 			}
 		},
 		"annotations": []
