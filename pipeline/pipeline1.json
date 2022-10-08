@@ -55,6 +55,10 @@
 							"fileName": {
 								"value": "@pipeline().parameters.fileNameSource",
 								"type": "Expression"
+							},
+							"filePath": {
+								"value": "@pipeline().parameters.filePathSource",
+								"type": "Expression"
 							}
 						}
 					}
