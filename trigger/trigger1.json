@@ -13,23 +13,14 @@
 		"typeProperties": {
 			"frequency": "Minute",
 			"interval": 15,
-			"startTime": "2022-03-01T00:35:00Z",
+			"startTime": "2022-10-08T00:35:00Z",
 			"endTime": "2022-10-10T00:35:00Z",
 			"delay": "02:00:00",
 			"maxConcurrency": 50,
 			"retryPolicy": {
 				"intervalInSeconds": 30
 			},
-			"dependsOn": [
-				{
-					"type": "SelfDependencyTumblingWindowTriggerReference",
-					"size": "2",
-					"offset": "-1"
-				},
-				{
-					"type": "SelfDependencyTumblingWindowTriggerReference"
-				}
-			]
+			"dependsOn": []
 		}
 	}
 }
