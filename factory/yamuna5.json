@@ -1,0 +1,9 @@
+{
+	"name": "yamuna5",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "09a90ddf-094a-4e86-97af-246e5a3727b1",
+		"tenantId": "fdade0c4-3fea-4320-ae53-1a1742aeff1e"
+	}
+}
