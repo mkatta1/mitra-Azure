@@ -13,7 +13,19 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT TableName, WatermarkValue from Transactional.watermarktable_mssqltips\nwhere TableName = 'data_source_table'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "mssqltips_sp_watermark",
+						"type": "DatasetReference"
+					}
+				}
 			},
 			{
 				"name": "Lookup_NewWaterMark",
@@ -26,7 +38,19 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT max(IngestionDate) as NewWatermarkvalue from Transactional.mssqltips_sales ",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "mssqltips_sp_watermark",
+						"type": "DatasetReference"
+					}
+				}
 			},
 			{
 				"name": "IncrementalLookupCopy",
@@ -54,8 +78,39 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT * FROM Transactional.mssqltips_sales\nWHERE IngestionDate > '@{activity('Lookup_OldWaterMark').output.firstRow.WatermarkValue}' \nAND IngestionDate <= '@{activity('Lookup_NewWaterMark').output.firstRow.NewWatermarkvalue}'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "mssqltips_sp_source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "mssqltips_sp_sink",
+						"type": "DatasetReference"
+					}
+				]
 			},
 			{
 				"name": "Set_WaterMark",
