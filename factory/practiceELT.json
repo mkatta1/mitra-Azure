@@ -1,0 +1,9 @@
+{
+	"name": "practiceELT",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "australiaeast"
+}
