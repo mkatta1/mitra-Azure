@@ -1,0 +1,12 @@
+{
+	"name": "mssqltips_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MicrosoftSQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
