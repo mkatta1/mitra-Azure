@@ -130,9 +130,39 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureParameters": {
+						"LastModifiedDate": {
+							"value": {
+								"value": "@pipeline().parameters.LastModifiedtime",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"TableName": {
+							"value": {
+								"value": "@pipeline().parameters.TableName",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "MicrosoftSQLServer",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
+		"parameters": {
+			"LastModifiedtime": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
