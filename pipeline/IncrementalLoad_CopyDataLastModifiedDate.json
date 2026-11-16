@@ -210,7 +210,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"modifiedDatetimeStart": {
-								"value": " @addMinutess(utcNow(),int(variables(‘Date-TimeDifference’)))",
+								"value": " @addDays(utcNow(),int(variables(‘Date-TimeDifference’)))",
 								"type": "Expression"
 							},
 							"modifiedDatetimeEnd": {
