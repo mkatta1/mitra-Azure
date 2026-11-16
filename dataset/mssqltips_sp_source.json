@@ -1,12 +1,23 @@
 {
-	"name": "mssqltips_sales",
+	"name": "mssqltips_sp_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "MicrosoftSQLServer",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
 	}
 }
