@@ -1,0 +1,15 @@
+{
+	"name": "practiceELT",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "493fb227-22de-4a68-ae5f-bd411b907425",
+		"tenantId": "663f0f8b-331b-400d-b6c1-9fcaf9db6bb7"
+	}
+}
