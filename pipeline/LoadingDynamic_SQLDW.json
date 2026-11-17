@@ -68,7 +68,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AzureSynapseAnalyticsTable",
+									"referenceName": "DS_ASQLDW_ETL_SRC",
 									"type": "DatasetReference"
 								}
 							]

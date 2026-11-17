@@ -1,5 +1,5 @@
 {
-	"name": "AzureSynapseAnalyticsTable",
+	"name": "DS_ASQLDW_ETL_SRC",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSynapseAnalytics1",
