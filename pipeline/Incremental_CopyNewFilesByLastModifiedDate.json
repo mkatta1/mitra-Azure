@@ -107,6 +107,9 @@
 				"defaultValue": "2019-03-01T00:00:00Z"
 			}
 		},
+		"folder": {
+			"name": "Incremental Load"
+		},
 		"annotations": []
 	}
 }

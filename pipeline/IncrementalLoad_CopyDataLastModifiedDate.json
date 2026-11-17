@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -102,6 +103,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -258,6 +260,9 @@
 			"Date-TimeDifference": {
 				"type": "String"
 			}
+		},
+		"folder": {
+			"name": "Incremental Load"
 		},
 		"annotations": []
 	}
