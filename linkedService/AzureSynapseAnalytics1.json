@@ -1,0 +1,31 @@
+{
+	"name": "AzureSynapseAnalytics1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"domainName": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			},
+			"Username": {
+				"type": "string"
+			},
+			"password": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"server": "@{linkedService().domainName}",
+			"database": "@{linkedService().DatabaseName}",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "@{linkedService().Username}",
+			"password": "@{linkedService().password}"
+		}
+	}
+}
