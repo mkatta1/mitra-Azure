@@ -64,11 +64,50 @@
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "SqlDWSink",
+									"preCopyScript": "CREATE TABLE @{item().dst_schema}.@{item().dst_name}\nWITH\n    (\n     CLUSTERED COLUMNSTORE INDEX,\n     DISTRIBUTION = @{item().distribution_type}\n    )\nAS SELECT TOP (0) * FROM etl.@{item().dst_name}\nOPTION (LABEL = 'CTAS : @{item().dst_name}');\n",
+									"writeBehavior": "Insert",
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_ASQLDW_ETL_SRC",
+									"type": "DatasetReference",
+									"parameters": {
+										"dst_name": {
+											"value": "@{item().dst_name}",
+											"type": "Expression"
+										},
+										"src_schema": {
+											"value": "@{item().src_schema}",
+											"type": "Expression"
+										},
+										"distriution_type": {
+											"value": "@{item().distribution_type}",
+											"type": "Expression"
+										},
+										"load_sqldw_etl_pipeline": "@{item().load_sqldw_etl_pipeline_status}",
+										"load_sqldw_curated_pipeline_date": "@{item().load_sqldw_curated_pipeline_date}",
+										"load_sqldw_curated_pipeline_status": "@{item().load_sqldw_curated_pipeline_status}",
+										"dst_schema": "@{item().dst_schema}"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ASQLDW_CURATED",
 									"type": "DatasetReference"
 								}
 							]
