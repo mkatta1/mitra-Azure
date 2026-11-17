@@ -1,6 +1,9 @@
 {
 	"name": "LoadingDynamic_SQLDW",
 	"properties": {
+		"folder": {
+			"name": "Dynamic"
+		},
 		"annotations": []
 	}
 }
