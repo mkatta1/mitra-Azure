@@ -1,6 +1,114 @@
 {
 	"name": "LoadingDynamic_SQLDW",
 	"properties": {
+		"activities": [
+			{
+				"name": "Get-Tables",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT [ID]\n      ,[server_name]\n      ,[src_type]\n      ,[src_schema]\n      ,[src_db]\n      ,[src_name]\n      ,[dst_type]\n      ,[dst_name]\n      ,[include_pipeline_flag]\n      ,[partition_field]\n      ,[process_type]\n      ,[priority_lane]\n      ,[pipeline_date]\n      ,[pipeline_status]\n      ,[load_synapse]\n      ,[load_frequency]\n      ,[dst_folder]\n      ,[file_type]\n      ,[lake_dst_folder]\n      ,[spark_flag]\n      ,[data_sources_id]\n      ,[dst_schema]\n      ,[distribution_type]\n      ,[load_sqldw_etl_pipeline_date]\n      ,[load_sqldw_etl_pipeline_status]\n      ,[load_sqldw_curated_pipeline_date]\n      ,[load_sqldw_curated_pipeline_status]\n      ,[load_delta_pipeline_date]\n      ,[load_delta_pipeline_status]\n  FROM [dbo].[pipeline_parameter]\nWHERE load_synapse = 1\nAND pipeline_status = 'success'\nAND include_pipeline_flag = 1\nAND process_type = 'full'\nAND load_frequency = 'daily'\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "mssqltips_sp_source",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get-Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get-Tables').output.value",
+						"type": "Expression"
+					},
+					"batchCount": 50,
+					"activities": [
+						{
+							"name": "Copy-Table1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
+						},
+						{
+							"name": "Create_ASQLDB_Log",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy-Table1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
+						},
+						{
+							"name": "SUCCESS-Stored Procedure",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copy-Table1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": []
+						}
+					]
+				}
+			}
+		],
 		"folder": {
 			"name": "Dynamic"
 		},
