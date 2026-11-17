@@ -59,8 +59,19 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSynapseAnalyticsTable",
+									"type": "DatasetReference"
+								}
+							]
 						},
 						{
 							"name": "Create_ASQLDB_Log",

@@ -11,6 +11,27 @@
 			},
 			"schemaname": {
 				"type": "string"
+			},
+			"dst_name": {
+				"type": "string"
+			},
+			"src_schema": {
+				"type": "string"
+			},
+			"distriution_type": {
+				"type": "string"
+			},
+			"load_sqldw_etl_pipeline": {
+				"type": "string"
+			},
+			"load_sqldw_curated_pipeline_date": {
+				"type": "string"
+			},
+			"load_sqldw_curated_pipeline_status": {
+				"type": "string"
+			},
+			"dst_schema": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
