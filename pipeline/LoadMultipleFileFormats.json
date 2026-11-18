@@ -1,0 +1,9 @@
+{
+	"name": "LoadMultipleFileFormats",
+	"properties": {
+		"folder": {
+			"name": "MultiplesFiles"
+		},
+		"annotations": []
+	}
+}
