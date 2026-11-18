@@ -129,6 +129,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"SQLTable": {
+				"type": "string"
+			},
+			"foldername": {
+				"type": "string"
+			},
+			"delimitedsymbol": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "MultiplesFiles"
 		},
