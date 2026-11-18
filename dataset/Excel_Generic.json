@@ -1,0 +1,33 @@
+{
+	"name": "Excel_Generic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"WorkbookName": {
+				"type": "string"
+			},
+			"WorkSheetName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().WorkSheetName",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().WorkbookName",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": []
+	}
+}
