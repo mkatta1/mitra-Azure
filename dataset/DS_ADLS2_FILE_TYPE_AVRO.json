@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"DIR_NAME": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "bronze/salesIt"
 			},
 			"FILE_NAME": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "address.avro"
 			}
 		},
 		"annotations": [],
