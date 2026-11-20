@@ -3,10 +3,17 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "If Condition1",
-				"type": "IfCondition",
+				"name": "Switch1",
+				"type": "Switch",
 				"dependsOn": [],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@toUpper(pipeline().parameters.FILE_TYPE)",
+						"type": "Expression"
+					},
+					"cases": []
+				}
 			}
 		],
 		"parameters": {
