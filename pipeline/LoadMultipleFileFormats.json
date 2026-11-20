@@ -1,6 +1,34 @@
 {
 	"name": "LoadMultipleFileFormats",
 	"properties": {
+		"activities": [
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"SCHEMA_NM": {
+				"type": "string"
+			},
+			"TABLE_NM": {
+				"type": "string"
+			},
+			"ZONE_NM": {
+				"type": "string"
+			},
+			"FILE_TYPE": {
+				"type": "string"
+			},
+			"FILE_EXT": {
+				"type": "string"
+			},
+			"DEL_CHAR": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "MultiplesFiles"
 		},
