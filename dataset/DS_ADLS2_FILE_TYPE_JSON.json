@@ -19,7 +19,15 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FILE_NAME",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DIR_NAME",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": {}
