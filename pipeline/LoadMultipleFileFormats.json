@@ -11,19 +11,24 @@
 		],
 		"parameters": {
 			"SCHEMA_NM": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "salesIt"
 			},
 			"TABLE_NM": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "address"
 			},
 			"ZONE_NM": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "bronze"
 			},
 			"FILE_TYPE": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "del"
 			},
 			"FILE_EXT": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "txt"
 			},
 			"DEL_CHAR": {
 				"type": "string"
