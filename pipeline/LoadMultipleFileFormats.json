@@ -28,6 +28,78 @@
 						{
 							"value": "ORC"
 						}
+					],
+					"defaultActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@concat(@concat(pipeline().parameters.ZONE_NM, '/', pipeline().parameters.SCHEMA_NM, '/', pipeline().parameters.TABLE_NM), \n@concat(pipeline().parameters.TABLE_NM, '-', replace(replace(substring(utcnow(), 0, 19), '-', ''), ':', ''), '.', pipeline().parameters.FILE_EXT), \n@pipeline().parameters.DEL_CHAR)",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSqlGeneric",
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": {
+											"value": "@pipeline().parameters.TABLE_NM",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@pipeline().parameters.SCHEMA_NM",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlGeneric",
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": {
+											"value": "@pipeline().parameters.TABLE_NM",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@pipeline().parameters.SCHEMA_NM",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
 					]
 				}
 			}
