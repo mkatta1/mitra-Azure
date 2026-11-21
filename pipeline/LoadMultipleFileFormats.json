@@ -12,7 +12,23 @@
 						"value": "@toUpper(pipeline().parameters.FILE_TYPE)",
 						"type": "Expression"
 					},
-					"cases": []
+					"cases": [
+						{
+							"value": "DEL"
+						},
+						{
+							"value": "AVRO"
+						},
+						{
+							"value": "JSON"
+						},
+						{
+							"value": "PARQUET"
+						},
+						{
+							"value": "ORC"
+						}
+					]
 				}
 			}
 		],
@@ -38,7 +54,8 @@
 				"defaultValue": "txt"
 			},
 			"DEL_CHAR": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": ","
 			}
 		},
 		"folder": {
