@@ -118,6 +118,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@greater(int(variables('CurrentID')),int(variables('LastID')))",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Get_CurrentID_AC",
@@ -185,7 +189,7 @@
 							}
 						}
 					],
-					"timeout": "0.12:00:00"
+					"timeout": "7.00:00:00"
 				}
 			},
 			{
