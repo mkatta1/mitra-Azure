@@ -1,5 +1,5 @@
 {
-	"name": "LoadMultipleFileFormats",
+	"name": "LoadMultipleDataLakeFileFormats",
 	"properties": {
 		"activities": [
 			{
