@@ -1,0 +1,186 @@
+{
+	"name": "FlexibleDynamicExcelADFpipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "LogStart",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "MicrosoftSQLServer",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "CREATE TABLE dbo.Tutorial_StagingProduct\n(\n     [Name]             NVARCHAR(50)\n    ,[ProductNumber]    NVARCHAR(25)\n    ,[Color]            NVARCHAR(15)\n    ,[StandardCost]     NUMERIC(10,2)\n    ,[ListPrice]        NUMERIC(10,2)\n    ,[Size]             NVARCHAR(5)\n    ,[Weight]           NUMERIC(8,2)\n);"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "FetchMetadata",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "LogStart",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT\n     ExcelFileName\n    ,ExcelSheetName\n    ,SchemaName\n    ,TableName\nFROM etl.ExcelMetadata;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlGeneric",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "LoopOverExcel",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FetchMetadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FetchMetadata').output",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Excel to SQL",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": "@concat('TRUNCATE TABLE ',item().SchemaName,'.',item().TableName,';')\n",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Excel_Generic",
+									"type": "DatasetReference",
+									"parameters": {
+										"WorkbookName": {
+											"value": "@item().ExcelFilename",
+											"type": "Expression"
+										},
+										"WorkSheetName": {
+											"value": "@item().ExcelSheetName",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlGeneric",
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": {
+											"value": "@item().tablename",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@item().schemaname",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "LogEnd",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "LoopOverExcel",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"folder": {
+			"name": "Dynamic"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"name": "yamuna",
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d0e69bfd-b3bd-4093-9304-c582d1c5748c",
+		"tenantId": "5cb72962-779a-4384-acc1-5f06b9569834"
+	}
+}

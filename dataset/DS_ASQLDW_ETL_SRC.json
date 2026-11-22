@@ -1,0 +1,51 @@
+{
+	"name": "DS_ASQLDW_ETL_SRC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			},
+			"schemaname": {
+				"type": "string"
+			},
+			"dst_name": {
+				"type": "string"
+			},
+			"src_schema": {
+				"type": "string"
+			},
+			"distriution_type": {
+				"type": "string"
+			},
+			"load_sqldw_etl_pipeline": {
+				"type": "string"
+			},
+			"load_sqldw_curated_pipeline_date": {
+				"type": "string"
+			},
+			"load_sqldw_curated_pipeline_status": {
+				"type": "string"
+			},
+			"dst_schema": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}

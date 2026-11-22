@@ -1,2 +1,1 @@
-#mitra-Azure
-# mitra-Azure
+Initialized by Azure Data Factory!

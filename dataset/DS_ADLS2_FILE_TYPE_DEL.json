@@ -1,0 +1,46 @@
+{
+	"name": "DS_ADLS2_FILE_TYPE_DEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGen2_Genric",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DIR_NAME": {
+				"type": "string",
+				"defaultValue": "bronze/salesIt"
+			},
+			"FILE_NAME": {
+				"type": "string",
+				"defaultValue": "address.csv"
+			},
+			"DELIMITER": {
+				"type": "string",
+				"defaultValue": ","
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FILE_NAME",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DIR_NAME",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": {
+				"value": "@dataset().DELIMITER",
+				"type": "Expression"
+			},
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

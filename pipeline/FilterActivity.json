@@ -1,0 +1,119 @@
+{
+	"name": "FilterActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_AC",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlGeneric",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "VW_TableList",
+							"schemaname": "dbo"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "SetVariable_AC",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Lookup_AC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TableNames",
+					"value": {
+						"value": "@activity('Lookup_AC').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Filter_AC",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Lookup_AC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_AC').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(string(item().name),'SalesLT.P')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SetVariable2_AC",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filter_AC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FilteredTableNames",
+					"value": {
+						"value": "@activity('Filter_AC').output.value",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"TableNames": {
+				"type": "Array"
+			},
+			"FilteredTableNames": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "ActivityPipelines"
+		},
+		"annotations": []
+	}
+}

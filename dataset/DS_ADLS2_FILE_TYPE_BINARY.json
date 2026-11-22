@@ -1,0 +1,34 @@
+{
+	"name": "DS_ADLS2_FILE_TYPE_BINARY",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGen2_Genric",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DIR_NAME": {
+				"type": "string",
+				"defaultValue": "bronze/salesIt"
+			},
+			"FILE_NAME": {
+				"type": "string",
+				"defaultValue": "address.bin"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FILE_NAME",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DIR_NAME",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
