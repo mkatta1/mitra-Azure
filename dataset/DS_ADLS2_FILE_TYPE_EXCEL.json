@@ -1,0 +1,43 @@
+{
+	"name": "DS_ADLS2_FILE_TYPE_EXCEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGen2_Genric",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DIR_NAME": {
+				"type": "string",
+				"defaultValue": "bronze/salesIt"
+			},
+			"WORKSHEET_NAME": {
+				"type": "string",
+				"defaultValue": "data"
+			},
+			"FILE_NAME": {
+				"type": "string",
+				"defaultValue": "address.xlsx"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().WORKSHEET_NAME",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FILE_NAME",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DIR_NAME",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": []
+	}
+}

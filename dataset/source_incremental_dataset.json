@@ -1,0 +1,21 @@
+{
+	"name": "source_incremental_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@concat('incremental_source/', formatDateTime(addDays(utcNow(),-1), 'yyyy'), '/', formatDateTime(addDays(utcNow(),-1), 'MMMM'), '/')",
+					"type": "Expression"
+				},
+				"container": "airflowcontainer"
+			}
+		}
+	}
+}

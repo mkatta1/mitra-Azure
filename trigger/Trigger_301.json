@@ -1,0 +1,17 @@
+{
+	"name": "Trigger_301",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2026-11-17T10:58:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

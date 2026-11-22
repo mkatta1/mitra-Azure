@@ -1,0 +1,23 @@
+{
+	"name": "mssqltips_sp_watermark",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MicrosoftSQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}
